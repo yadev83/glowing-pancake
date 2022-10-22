@@ -15,7 +15,7 @@ SRC			:= $(wildcard src*/*.cpp)
 OBJECTS 	+= $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 TARGET		:= App.exe
-
+dsss
 ## COMPILATION HERE ##
 all: build $(APP_DIR)/$(TARGET)
 
