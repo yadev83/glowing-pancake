@@ -10,11 +10,11 @@ using namespace std::placeholders;
 
 
 int main(int argc, char *argv[]) {
-    EventManager eventManager;
+    EventManager *eventManager = EventManager::get();
     DemoObserver observer;
 
-    eventManager.subscribe(DemoEvent::id, std::bind(&DemoObserver::onDemoEvent, observer, _1));
-    eventManager.dispatch(DemoEvent());
+    eventManager->subscribe(DemoEvent::id, std::bind(&DemoObserver::onDemoEvent, observer, _1));
+    eventManager->dispatch(DemoEvent());
 
     return 0;
 }
