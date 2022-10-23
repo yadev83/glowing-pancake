@@ -1,19 +1,29 @@
+#include <iostream>
+
 #include "event.hpp"
 #include "eventManager.hpp"
 
-#include <iostream>
+EventManager *EventManager::m_instance = nullptr;
+
+EventManager *EventManager::get() {
+    if(m_instance == nullptr) {
+        m_instance = new EventManager();
+    }
+
+    return m_instance;
+}
 
 void EventManager::subscribe(const Event::EventID& eventID, Action&& action) {
-    _observers[eventID].push_back(action);
+    m_observers[eventID].push_back(action);
 }
 
 void EventManager::dispatch(const Event& event) const {
     // If the event type has no observers attached, ignore it
-    if(_observers.find(event.type()) == _observers.end()) {
+    if(m_observers.find(event.type()) == m_observers.end()) {
         return;
     }
 
-    auto&& observers = _observers.at(event.type());
+    auto&& observers = m_observers.at(event.type());
 
     for(auto&& observer: observers) {
         observer(event);
