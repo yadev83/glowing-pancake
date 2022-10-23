@@ -11,6 +11,67 @@
 
 using namespace std::placeholders;
 
+class SDL2App {
+    private:
+        SDL_Window *m_window = NULL;
+        SDL_Surface *m_screenSurface = NULL;
+        SDL_Event m_sdlEvent;
+
+        bool m_quit = false;
+
+    protected:
+
+    public:
+        SDL2App(const int windowWidth, const int windowHeight, const char *windowName) {
+            if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+                std::cout << "SDL Could not initialize ! SDL_ERROR: " << SDL_GetError() << std::endl;
+            } else {
+                m_window = SDL_CreateWindow(windowName, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
+                if(m_window == NULL) {
+                    std::cout << "SDL Window could not be created ! SDL_ERROR: " << SDL_GetError() << std::endl;
+                }
+
+                m_screenSurface = SDL_GetWindowSurface(m_window);
+                SDL_FillRect(m_screenSurface, NULL, SDL_MapRGB(m_screenSurface->format, 0x40, 0x42, 0x54));
+                SDL_UpdateWindowSurface(m_window);
+            }
+        }
+
+        bool ready() {
+            return m_window && m_screenSurface && !m_quit;
+        }
+
+        bool shouldQuit() {
+            return m_quit;
+        }
+
+        void Init() {
+
+        }
+
+        void Update() {
+            while(SDL_PollEvent(&m_sdlEvent)) {
+                switch(m_sdlEvent.type) {
+                    case SDL_QUIT:
+                        m_quit = true;
+                }
+            }
+        }
+
+        void Draw() {
+
+        }
+
+        void LateUpdate() {
+
+        }
+
+        void Quit() {
+            SDL_DestroyWindow(m_window);
+            SDL_Quit();
+        }
+};
+
 int main(int argc, char *argv[]) {
     EventManager *eventManager = EventManager::get();
     DemoObserver observer;
@@ -18,34 +79,18 @@ int main(int argc, char *argv[]) {
     eventManager->subscribe(DemoEvent::id, std::bind(&DemoObserver::onDemoEvent, observer, _1));
     eventManager->dispatch(DemoEvent());
 
-    SDL_Window *window = NULL;
-    SDL_Surface *screenSurface = NULL;
+    SDL2App *app = new SDL2App(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
 
-    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cout << "SDL Could not initialize ! SDL_ERROR: " << SDL_GetError() << std::endl;
-    } else {
-        window = SDL_CreateWindow(APP_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if(window == NULL)
-            std::cout << "Window could not be created ! SDL_ERROR: " << SDL_GetError() << std::endl;
+    if(app->ready()) {
+        app->Init();
 
-        screenSurface = SDL_GetWindowSurface(window);
-        SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x40, 0x42, 0x54));
-        SDL_UpdateWindowSurface(window);
-
-        SDL_Event e;
-        bool quit = false;
-
-        while(!quit) {
-            while(SDL_PollEvent(&e)) {
-                switch(e.type) {
-                    case SDL_QUIT:
-                        quit = true;
-                }
-            }
+        while(!app->shouldQuit()) {
+            app->Update();
+            app->Draw();
+            app->LateUpdate();
         }
 
-        SDL_DestroyWindow(window);
-        SDL_Quit();
+        app->Quit();
     }
 
     return 0;
