@@ -9,9 +9,9 @@ INCLUDE_DIR	:= include
 C			:= g++
 CFLAGS		:= -pedantic-errors -Wall -Wextra
 LDFLAGS		:= -L$(LIB_DIR)
-INCLUDE		:= -isysteminclude -I$(INCLUDE_DIR)
+INCLUDE		:= -isysteminclude -I$(INCLUDE_DIR) -I$(SRC_DIR)
 
-SRC			:= $(wildcard src*/*.cpp)
+SRC			:= $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/*/*.cpp $(SRC_DIR)/*/*/*.cpp)
 OBJECTS 	+= $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 TARGET		:= App.exe
