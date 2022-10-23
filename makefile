@@ -8,7 +8,7 @@ INCLUDE_DIR	:= include
 
 C			:= g++
 CFLAGS		:= -pedantic-errors -Wall -Wextra
-LDFLAGS		:= -L$(LIB_DIR)
+LDFLAGS		:= -L$(LIB_DIR) -lmingw32 -lSDL2main -lSDL2
 INCLUDE		:= -isysteminclude -I$(INCLUDE_DIR) -I$(SRC_DIR)
 
 SRC			:= $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/*/*.cpp $(SRC_DIR)/*/*/*.cpp)
