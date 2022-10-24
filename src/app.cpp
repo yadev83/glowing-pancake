@@ -5,21 +5,16 @@
 
 #include <utils/constants.hpp>
 #include <utils/event/eventManager.hpp>
+#include <utils/app/app.hpp>
 
 #include <application/events/demoEvent.hpp>
 #include <application/observers/demoObserver.hpp>
 
-using namespace std::placeholders;
-
-class SDL2App {
+class SDL2App : public App {
     private:
         SDL_Window *m_window = NULL;
         SDL_Surface *m_screenSurface = NULL;
         SDL_Event m_sdlEvent;
-
-        bool m_quit = false;
-
-    protected:
 
     public:
         SDL2App(const int windowWidth, const int windowHeight, const char *windowName) {
@@ -74,10 +69,6 @@ class SDL2App {
 
 int main(int argc, char *argv[]) {
     EventManager *eventManager = EventManager::get();
-    DemoObserver observer;
-
-    eventManager->subscribe(DemoEvent::id, std::bind(&DemoObserver::onDemoEvent, observer, _1));
-    eventManager->dispatch(DemoEvent());
 
     SDL2App *app = new SDL2App(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
 
