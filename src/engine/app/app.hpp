@@ -10,6 +10,7 @@
 class App {
     protected:
         bool m_quit = false;
+        EventManager *m_eventManager;
 
     public:
         App();
