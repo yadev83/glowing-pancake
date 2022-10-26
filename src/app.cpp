@@ -3,12 +3,13 @@
 
 #include <SDL2/SDL.h>
 
-#include <utils/constants.hpp>
-#include <utils/event/eventManager.hpp>
-#include <utils/app/app.hpp>
+#include <engine/event/eventManager.hpp>
+#include <engine/app/app.hpp>
 
 #include <application/events/demoEvent.hpp>
 #include <application/observers/demoObserver.hpp>
+
+#include <application/utils/constants.hpp>
 
 class SDL2App : public App {
     private:
