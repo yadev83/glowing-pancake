@@ -68,9 +68,7 @@ class SDL2App : public App {
 };
 
 int main(int argc, char *argv[]) {
-    EventManager *eventManager = EventManager::get();
-
-    SDL2App *app = new SDL2App(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
+    App *app = new SDL2App(SCREEN_WIDTH, SCREEN_HEIGHT, APP_NAME);
 
     if(app->ready()) {
         app->Init();
