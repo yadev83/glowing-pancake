@@ -52,8 +52,7 @@ class MyApp : public SDL2App {
  * @brief Main entry point of the app.
  * It contains a main loop that loads the MyApp App defined above.
  * You shouldn't be editing past this point really, until you REALLY know what you are doing.
- * 
- * End event the, you should be careful about the implementation of your App and the main loop, that's
+ * And event then, you should be careful about the implementation of your App and the main loop, that's
  * probably the less flexible part of the whole framework. Most of the code should go directly in the above custom class
  * 
  * @param argc 
