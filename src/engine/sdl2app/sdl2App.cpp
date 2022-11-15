@@ -19,13 +19,7 @@ bool SDL2App::ready() {
     return m_window && m_screenSurface && !m_quit;
 }
 
-bool SDL2App::shouldQuit() {
-    return m_quit;
-}
-
-void SDL2App::Init() {
-    
-}
+void SDL2App::Init() {}
 
 void SDL2App::Update() {
     while(SDL_PollEvent(&m_sdlEvent)) {
@@ -36,13 +30,9 @@ void SDL2App::Update() {
     }
 }
 
-void SDL2App::Draw() {
+void SDL2App::Draw() {}
 
-}
-
-void SDL2App::LateUpdate() {
-
-}
+void SDL2App::LateUpdate() {}
 
 void SDL2App::Quit() {
     SDL_DestroyWindow(m_window);

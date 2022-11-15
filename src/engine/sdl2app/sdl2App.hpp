@@ -16,13 +16,12 @@ class SDL2App : public App {
     public:
         SDL2App(const int windowWidth, const int windowHeight, const char *windowName);
         bool ready();
-        bool shouldQuit();
 
         void Init();
-        void Update();
-        void Draw();
-        void LateUpdate();
-        void Quit();
+        virtual void Update();
+        virtual void Draw();
+        virtual void LateUpdate();
+        virtual void Quit();
 };
 
 #endif
